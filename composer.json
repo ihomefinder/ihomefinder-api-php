@@ -4,12 +4,13 @@
 	"type": "library",
 	"description": "iHomefinder API for PHP",
 	"homepage": "http://www.iHomefinder.com",
-	"require": {
-		"php": ">=7.0.0"
-	},
 	"autoload": {
 		"psr-4": {
 			"" : "src"
 		}
+	},
+	"require": {
+		"php": ">=7.0.0",
+		"mashape/unirest-php": "3.0.4"
 	}
 }
