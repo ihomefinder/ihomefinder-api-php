@@ -3,17 +3,17 @@
 namespace iHomefinder\Api\Resource;
 
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Resource;
 
 class Board extends Resource {
 	
-	public function Board(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -22,7 +22,7 @@ class Board extends Resource {
 	}
 	
 	public function getName() {
-		return $this->getter("name", Integer::class); 
+		return $this->getter("name", "int"); 
 	}
 	
 	public function setName($name): self {
@@ -31,7 +31,7 @@ class Board extends Resource {
 	}
 	
 	public function getAbbreviation() {
-		return $this->getter("abbreviation", String::class);
+		return $this->getter("abbreviation", "string");
 	}
 	
 	public function setAbbreviation($abbreviation): self {
@@ -39,7 +39,7 @@ class Board extends Resource {
 		return $this;
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"name",

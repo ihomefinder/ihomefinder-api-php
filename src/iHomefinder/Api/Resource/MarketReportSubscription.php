@@ -3,7 +3,7 @@
 namespace iHomefinder\Api\Resource;
 
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Resource;
 use \iHomefinder\Api\Savable;
 use \iHomefinder\Api\Url;
@@ -11,12 +11,12 @@ use \iHomefinder\Api\Exception\UnsavedResourceException;
 
 class MarketReportSubscription extends Resource implements Savable {
 	
-	public function MarketReportSubscription(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -25,7 +25,7 @@ class MarketReportSubscription extends Resource implements Savable {
 	}
 	
 	public function getMarketReportId() {
-		return $this->getter("marketReportId", Integer::class);
+		return $this->getter("marketReportId", "int");
 	}
 	
 	public function setMarketReportId($marketReportId): self {
@@ -34,7 +34,7 @@ class MarketReportSubscription extends Resource implements Savable {
 	}
 	
 	public function getSubscriberId() {
-		return $this->getter("subscriberId", Integer::class);
+		return $this->getter("subscriberId", "int");
 	}
 	
 	public function setSubscriberId($subscriberId): self {
@@ -73,7 +73,7 @@ class MarketReportSubscription extends Resource implements Savable {
 		return $this;
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"marketReportId",

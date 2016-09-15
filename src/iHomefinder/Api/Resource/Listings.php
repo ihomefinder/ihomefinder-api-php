@@ -15,8 +15,12 @@ class Listings extends Resources {
 		return $listings;
 	}
 	
-	public function Listings(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return Listing::class;
 	}
 
 }

@@ -3,7 +3,7 @@
 namespace iHomefinder\Api\Resource;
 
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Query;
 use \iHomefinder\Api\Resource;
 use \iHomefinder\Api\Savable;
@@ -19,12 +19,12 @@ class Subscriber extends Resource implements Savable {
 		return Subscribers::get($auth, $query)->iterator()->next();
 	}
 	
-	public function Subscriber(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -33,7 +33,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getClientId() {
-		return $this->getter("clientId", Integer::class);
+		return $this->getter("clientId", "int");
 	}
 	
 	public function setClientId($clientId): self {
@@ -42,7 +42,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getAgentId() {
-		return $this->getter("agentId", Integer::class);
+		return $this->getter("agentId", "int");
 	}
 	
 	public function setAgentId($agentId): self {
@@ -51,7 +51,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getFirstName() {
-		return $this->getter("firstName", String::class);
+		return $this->getter("firstName", "string");
 	}
 	
 	public function setFirstName($firstName): self {
@@ -60,7 +60,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getLastName() {
-		return $this->getter("lastName", String::class);
+		return $this->getter("lastName", "string");
 	}
 	
 	public function setLastName($lastName): self {
@@ -69,7 +69,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getEmailAddress() {
-		return $this->getter("emailAddress", String::class);
+		return $this->getter("emailAddress", "string");
 	}
 	
 	public function setEmailAddress($emailAddress): self {
@@ -78,7 +78,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getPassword() {
-		return $this->getter("password", String::class);
+		return $this->getter("password", "string");
 	}
 	
 	public function setPassword($password): self {
@@ -87,7 +87,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getPhone() {
-		return $this->getter("phone", String::class);
+		return $this->getter("phone", "string");
 	}
 	
 	public function setPhone($phone): self {
@@ -96,7 +96,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getAddress() {
-		return $this->getter("address", String::class);
+		return $this->getter("address", "string");
 	}
 	
 	public function setAddress($address): self {
@@ -105,7 +105,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getCity() {
-		return $this->getter("city", String::class);
+		return $this->getter("city", "string");
 	}
 	
 	public function setCity($city): self {
@@ -114,7 +114,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getState() {
-		return $this->getter("state", String::class);
+		return $this->getter("state", "string");
 	}
 	
 	public function setState($state): self {
@@ -123,7 +123,7 @@ class Subscriber extends Resource implements Savable {
 	}
 	
 	public function getPostalCode() {
-		return $this->getter("postalCode", String::class);
+		return $this->getter("postalCode", "string");
 	}
 	
 	public function setPostalCode($postalCode): self {
@@ -158,7 +158,7 @@ class Subscriber extends Resource implements Savable {
 		return $this;
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"clientId",

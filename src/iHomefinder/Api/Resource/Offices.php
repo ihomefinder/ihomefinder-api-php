@@ -15,8 +15,12 @@ class Offices extends Resources {
 		return $offices;
 	}
 	
-	public function Offices(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return Office::class;
 	}
 	
 }

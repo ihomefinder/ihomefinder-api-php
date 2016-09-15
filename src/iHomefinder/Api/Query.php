@@ -42,13 +42,13 @@ class Query {
 	
 	public function loadRequest(HttpRequest $request) {
 		$request->setParameters($this->where);
-		if($this->offset != null) {
+		if($this->offset !== null) {
 			$request->setParameter("offset", $this->offset);
 		}
-		if($this->limit != null) {
+		if($this->limit !== null) {
 			$request->setParameter("limit", $this->limit);
 		}
-		if(!$this->fields->isEmpty()) {
+		if(!empty($this->fields)) {
 			$request->setParameter("fields", implode(",", $this->fields));
 		}
 	}

@@ -15,8 +15,12 @@ class ScheduleShowingRequests extends Resources {
 		return scheduleShowingRequests;
 	}
 	
-	public function ScheduleShowingRequests(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return ScheduleShowingRequest::class;
 	}
 		
 }

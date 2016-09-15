@@ -15,8 +15,12 @@ class Agents extends Resources {
 		return $agents;
 	}
 	
-	public function Agents(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return Agent::class;
 	}
 	
 }

@@ -15,8 +15,12 @@ class MarketReportSignupRequests extends Resources {
 		return $marketReportSignupRequests;
 	}
 	
-	public function MarketReportSignupRequests(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return MarketReportSignupRequest::class;
 	}
 	
 }

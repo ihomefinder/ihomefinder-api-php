@@ -3,17 +3,17 @@
 namespace iHomefinder\Api\Resource;
 
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Resource;
 
 class Office extends Resource {
 	
-	public function Office(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -22,7 +22,7 @@ class Office extends Resource {
 	}
 	
 	public function getName() {
-		return $this->getter("name", String::class); 
+		return $this->getter("name", "string"); 
 	}
 	
 	public function setName($name): self {
@@ -31,7 +31,7 @@ class Office extends Resource {
 	}
 	
 	public function getEmailAddress() {
-		return $this->getter("emailAddress", String::class);
+		return $this->getter("emailAddress", "string");
 	}
 	
 	public function setEmailAddress($emailAddress): self {
@@ -40,7 +40,7 @@ class Office extends Resource {
 	}
 	
 	public function getAddress() {
-		return $this->getter("address", String::class);
+		return $this->getter("address", "string");
 	}
 	
 	public function setAddress($address): self {
@@ -49,7 +49,7 @@ class Office extends Resource {
 	}
 	
 	public function getCity() {
-		return $this->getter("city", String::class);
+		return $this->getter("city", "string");
 	}
 	
 	public function setCity($city): self {
@@ -58,7 +58,7 @@ class Office extends Resource {
 	}
 	
 	public function getState() {
-		return $this->getter("state", String::class);
+		return $this->getter("state", "string");
 	}
 	
 	public function setState($state): self {
@@ -67,7 +67,7 @@ class Office extends Resource {
 	}
 	
 	public function getPostalCode() {
-		return $this->getter("postalCode", String::class);
+		return $this->getter("postalCode", "string");
 	}
 	
 	public function setPostalCode($postalCode): self {
@@ -78,7 +78,7 @@ class Office extends Resource {
 	public function  getAgents(): Agents {
 		return $this->getter("agents", Agents::class);
 	}
-		protected function getFieldNames(): Fields {
+		protected function getFieldNames(): array {
 		return [
 			"id",
 			"name",

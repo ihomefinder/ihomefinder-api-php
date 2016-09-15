@@ -3,17 +3,17 @@
 namespace iHomefinder\Api\Resource;
 
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Resource;
 
 class Client extends Resource {
 	
-	public function Client(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -22,7 +22,7 @@ class Client extends Resource {
 	}
 	
 	public function getFirstName() {
-		return $this->getter("firstName", String::class);
+		return $this->getter("firstName", "string");
 	}
 	
 	public function setFirstName($firstName): self {
@@ -31,7 +31,7 @@ class Client extends Resource {
 	}
 	
 	public function getLastName() {
-		return $this->getter("lastName", String::class);
+		return $this->getter("lastName", "string");
 	}
 	
 	public function setLastName($lastName): self {
@@ -91,7 +91,7 @@ class Client extends Resource {
 		return $this->getter("marketReportSignupRequests", MarketReportSignupRequests::class);
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"firstName",

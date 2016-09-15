@@ -15,8 +15,12 @@ class Subscribers extends Resources {
 		return $subscribers;
 	}
 	
-	public function Subscribers(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return Subscriber::class;
 	}
 	
 }

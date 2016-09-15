@@ -3,6 +3,7 @@
 namespace iHomefinder\Api;
 
 use \Unirest\Request as UnirestRequest;
+use \Unirest\Response as UnirestResponse;
 
 class HttpRequest {
 
@@ -13,7 +14,7 @@ class HttpRequest {
 	private $pathParameters = [];
 	private $parameters = [];
 	
-	public function HttpRequest(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		$this->auth = $auth;
 		$this->headers["User-Agent"] = Constants::USER_AGENT;
 		if(Constants::DEBUG) {
@@ -21,12 +22,12 @@ class HttpRequest {
 		}
 	}
 	
-	public function setUrl($url): self {
+	public function setUrl(string $url): self {
 		$this->url = $url;
 		return $this;
 	}
 	
-	public function setMethod($method): self {
+	public function setMethod(string $method): self {
 		$this->method = $method;
 		return $this;
 	}
@@ -52,7 +53,7 @@ class HttpRequest {
 	}
 	
 	public function addQuery(Query $query): self {
-		if($query != null) {
+		if($query !== null) {
 			$query->loadRequest($this);
 		}
 		return $this;
@@ -66,7 +67,6 @@ class HttpRequest {
 			"parameters" => $this->parameters,
 			"pathParameters" => $this->pathParameters,
 		];
-
 		Log::debug($debug);
 		$httpResponse = null;
 		try {
@@ -87,71 +87,43 @@ class HttpRequest {
 		} catch(UnirestException $e) {
 			throw new HttpException($e);
 		}
-		$status = $httpResponse->getStatus();
+		$status = $httpResponse->code;
 		if($status < 200 || $status > 299) {
-			Log::debug($httpResponse->getBody());
+			Log::debug($httpResponse->body);
 			throw new HttpException("Status " + status);
 		}
 		return new HttpResponse($httpResponse);
 	}
 	
-	private function getRequest(): UnirestRequest {
-		$request = UnirestRequest
-			::get($this->url)
-			->basicAuth($auth->getUsername(), $auth->getPassword())
-			->headers($this->headers)
-		;
-		$request = $this->replacePathParameters($request);
-		return $request
-			->queryString($this->parameters)
-			->asString()
-		;
+	private function getRequest(): UnirestResponse {
+		UnirestRequest::auth($this->auth->getUsername(), $this->auth->getPassword());
+		$url = $this->replacePathParameters($this->url);
+		return UnirestRequest::get($this->url, $this->headers, $this->parameters);
 	}
 	
-	private function postRequest(): UnirestRequest {
-		$request = UnirestRequest
-			::post(url)
-			->basicAuth($auth->getUsername(), $auth->getPassword())
-			->headers(headers)
-		;
-		$request = $this->replacePathParameters($request);
-		return $request
-			->fields($this->parameters)
-			->asString()
-		;
+	private function postRequest(): UnirestResponse {
+		UnirestRequest::auth($this->auth->getUsername(), $this->auth->getPassword());
+		$url = $this->replacePathParameters($this->url);
+		return UnirestRequest::post($this->url, $this->headers, $this->parameters);
 	}
 	
-	private function putRequest(): UnirestRequest {
-		$request = UnirestRequest
-			::put($this->url)
-			->basicAuth($auth->getUsername(), $auth->getPassword())
-			->headers($this->headers)
-		;
-		$request = $this->replacePathParameters($request);
-		return $request
-			->fields($this->parameters)
-			->asString()
-		;
+	private function putRequest(): UnirestResponse {
+		UnirestRequest::auth($this->auth->getUsername(), $this->auth->getPassword());
+		$url = $this->replacePathParameters($this->url);
+		return UnirestRequest::put($this->url, $this->headers, $this->parameters);
 	}
 	
-	private function deleteRequest(): UnirestRequest {
-		$request = UnirestRequest
-			::delete($this->url)
-			->basicAuth($auth->getUsername(), $auth->getPassword())
-			->headers(headers)
-		;
-		$request = $this->replacePathParameters($request);
-		return $request
-			->fields($this->parameters)
-			->asString()
-		;
+	private function deleteRequest(): UnirestResponse {
+		UnirestRequest::auth($this->auth->getUsername(), $this->auth->getPassword());
+		$url = $this->replacePathParameters($this->url);
+		return UnirestRequest::delete($this->url, $this->headers, $this->parameters);
 	}
 	
-	private function replacePathParameters(UnirestRequest $request): UnirestRequest {
+	private function replacePathParameters(string $url): string {
 		foreach($this->pathParameters as $name => $value) {
-			$request = $request->routeParam($name, $value);
+			$url = str_replace("{" . $name . "}", $value, $url);
 		}
-		return $request;
+		return $url;
 	}
 	
 }

@@ -7,8 +7,12 @@ use \iHomefinder\Api\Resources;
 
 class ListingReportSubscriptions extends Resources {
 
-	public function ListingReportSubscriptions(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return ListingReportSubscription::class;
 	}
 	
 }

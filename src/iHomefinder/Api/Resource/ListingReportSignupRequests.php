@@ -15,8 +15,12 @@ class ListingReportSignupRequests extends Resources {
 		return $listingReportSignupRequests;
 	}
 	
-	public function ListingReportSignupRequests(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return ListingReportSignupRequest::class;
 	}
 	
 }

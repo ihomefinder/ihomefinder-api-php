@@ -2,99 +2,101 @@
 
 namespace iHomefinder\Api;
 
-abstract class Resources extends Resource implements Iterable {
+abstract class Resources extends Resource implements \Iterator, \Countable {
 	
-	private final Class<E> elementClass = (Class<E>) ((ParameterizedType) getClass()->getGenericSuperclass())->getActualTypeArguments()[0];
-	private final ArrayList<E> results = new ArrayList<>();
+	private $cursor = 0;
 	
-	private Query $query = setQueryDefaults(new Query());
+	private $results = [];
 	
-	public function Resources(Authentication $auth) {
-		super($auth);
-	}
+	private $query;
 	
 	protected abstract function getElementClass(): string;
-
-	public function Iterator<E> iterator() {
-		Resources self = $this;
-		Iterator<E> iterator = new Iterator<E>() {
-			
-			private int cursor = 0;
-			
-			public function hasNext() {
-				boolean result = false;
-				if(cursor < size()) {
-					result = true;
-				}
-				return result;
-			}
-
-			public function E next() {
-				E result = null;
-				if(cursor >= results->size() && size() > results->size()) {
-					self->query
-						->offset(cursor)
-					;
-					self->init(getUrl(), self->query);
-				}
-				if(cursor < results->size()) {
-					result = results->get(cursor);
-				}
-				cursor++;
-				return result;
-			}
-		};
-		return iterator;
-	}
-
-	public function int size() {
-		Integer result = getter("total", Integer::class);
-		if(result == null) {
-			result = 0;
-		}
-		return result;
+	
+	public function __construct(Authentication $auth) {
+		parent::__construct($auth);
+		$this->query = $this->setQueryDefaults(new Query());
 	}
 	
-	protected init($url, Query $query) {
-		$this->query = setQueryDefaults(query);
-		init(url);
+	public function rewind() {
+		$this->cursor = 0;
 	}
-	
-	protected init($url) {
-		Map<String, Object> object = (new HttpRequest($auth))
-			->setUrl(url)
+	
+	public function current() {
+		$result = null;
+		if($this->cursor >= count($this->results) && $this->count() > count($this->results)) {
+			$this->query
+				->offset($this->cursor)
+			;
+			$this->init($this->getUrl(), $this->query);
+		}
+		if($this->cursor < count($this->results)) {
+			$result = $this->results[$this->cursor];
+		}
+		return $result;
+	}
+	
+	public function key(): int {
+		return $this->cursor;
+	}
+	
+	public function next() {
+		++$this->cursor;
+	}
+	
+	public function valid(): bool {
+		$result = false;
+		if($this->cursor < $this->count()) {
+			$result = true;
+		}
+		return $result;
+	}
+	
+	public function count(): int {
+		$result = $this->getter("total", "int");
+		if($result === null) {
+			$result = 0;
+		}
+		return $result;
+	}
+	
+	protected function init($url, Query $query = null) {
+		if($query !== null) {
+			$this->query = $this->setQueryDefaults($query);
+		}
+		$data = (new HttpRequest($this->auth))
+			->setUrl($url)
 			->setMethod("GET")
-			->addQuery(query)
+			->addQuery($this->query)
 			->getResponse()
 			->getData()
 		;
-		$this->hydrate(object);
+		$this->hydrate($data);
 	}
-	
-	protected hydrate(Map<String, Object> data) {
-		super->hydrate(data);
-		List<Map<String, Object>> results = (List<Map<String, Object>>) data->get("results");
-		if(results != null) {
-			for(Map<String, Object> result : results) {
-				E resource = ResourceManager::getInstance()->getOrCreateInstance($auth, $this->getElementClass(), $result);
-				$this->results->add(resource);
+	
+	public function hydrate($data) {
+		parent::hydrate($data);
+		$results = $data->results;
+		if($results !== null) {
+			foreach($results as $result) {
+				$resource = ResourceManager::getInstance()->getOrCreateInstance($this->auth, $this->getElementClass(), $result);
+				$this->results[] = $resource;
 			}
 		}
 	}
 	
-	private Query setQueryDefaults(Query $query) {
-		if(query == null) {
-			query = new Query();
+	private function setQueryDefaults(Query $query): Query {
+		if($query === null) {
+			$query = new Query();
 		}
-		query
+		$query
 			->select("*")
 			->limit(50)
 		;
-		return query;
+		return $query;
 	}
-	
-	protected function getFieldNames(): Fields {
-		return null;
+	
+	protected function getFieldNames(): array {
+		return [];
 	}
 	
 }

@@ -15,7 +15,7 @@ class Markets extends Resources {
 		return $markets;
 	}
 	
-	public function Markets(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 	

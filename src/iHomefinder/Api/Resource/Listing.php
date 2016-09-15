@@ -3,17 +3,17 @@
 namespace iHomefinder\Api\Resource;
 
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Resource;
 
 class Listing extends Resource {
 	
-	public function Listing(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", String::class);
+		return $this->getter("id", "string");
 	}
 	
 	public function setId($id): self {
@@ -22,7 +22,7 @@ class Listing extends Resource {
 	}
 	
 	public function getListingNumber() {
-		return $this->getter("listingNumber", String::class);
+		return $this->getter("listingNumber", "string");
 	}
 	
 	public function setListingNumber($listingNumber): self {
@@ -31,7 +31,7 @@ class Listing extends Resource {
 	}
 	
 	public function getBoardId() {
-		return $this->getter("boardId", String::class);
+		return $this->getter("boardId", "string");
 	}
 	
 	public function setBoardId($boardId): self {
@@ -40,7 +40,7 @@ class Listing extends Resource {
 	}
 	
 	public function getBedrooms() {
-		return $this->getter("bedrooms", String::class);
+		return $this->getter("bedrooms", "string");
 	}
 	
 	public function setBedrooms($bedrooms): self {
@@ -49,7 +49,7 @@ class Listing extends Resource {
 	}
 	
 	public function getFullBathrooms() {
-		return $this->getter("fullBathrooms", String::class);
+		return $this->getter("fullBathrooms", "string");
 	}
 	
 	public function setFullBathrooms($fullBathrooms): self {
@@ -58,7 +58,7 @@ class Listing extends Resource {
 	}
 	
 	public function getPartialBathrooms() {
-		return $this->getter("partialBathrooms", String::class);
+		return $this->getter("partialBathrooms", "string");
 	}
 	
 	public function setPartialBathrooms($partialBathrooms): self {
@@ -70,7 +70,7 @@ class Listing extends Resource {
 		return $this->getter("board", Board::class);
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"listingNumber",

@@ -15,8 +15,12 @@ class Boards extends Resources {
 		return $boards;
 	}
 	
-	public function Boards(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return Board::class;
 	}
 	
 }

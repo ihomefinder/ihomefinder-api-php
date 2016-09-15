@@ -15,8 +15,12 @@ class MoreInfoRequests extends Resources {
 		return $moreInfoRequests;
 	}
 	
-	public function MoreInfoRequests(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return MoreInfoRequest::class;
 	}
 	
 }

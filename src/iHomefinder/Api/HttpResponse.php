@@ -10,30 +10,29 @@ use \iHomefinder\Api\Exception\HttpException;
 class HttpResponse {
 	
 	private $response;
-	private $object;
+	private $data;
 	
-	public function HttpResponse(UnirestResponse $response) {
+	public function __construct(UnirestResponse $response) {
 		$this->response = $response;
-		$body = $response->getBody();
-		try {
-			JSONObject json = new JSONObject(body);
-			object = new JsonObjectToMap(json)->getResults();
-			List<Map<String, Object>> errors = (List<Map<String, Object>>) object->get("errors");
-			if(errors != null && !errors->isEmpty()) {
-				for(Map<String, Object> error : errors) {
-					Integer code = (Integer) error->get("code");
-					String message = (String) error->get("message");
-					String href = (String) error->get("href");
-					throw new ApiException(message);
-				}
+		$body = $response->raw_body;
+		$data = json_decode($body);
+		if(json_last_error() !== JSON_ERROR_NONE) {
+			throw new HttpException("Invalid JSON");
+		}
+		$this->data = $data;
+		if(property_exists($data, "errors")) {
+			$errors = $data->errors;
+			foreach($errors as $error) {
+				$code = $error->code;
+				$message = $error->message;
+				$href = $error->href;
+				throw new ApiException($message);
 			}
-		} catch (JSONException e) {
-			throw new HttpException(e);
 		}
 	}
 	
-	public function Map<String, Object> getData() {
-		return $this->object;
+	public function getData(): \stdClass {
+		return $this->data;
 	}
 	
 }

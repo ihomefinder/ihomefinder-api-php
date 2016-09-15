@@ -2,21 +2,18 @@
 
 namespace iHomefinder\Api\Resource;
 
-
-
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
 use \iHomefinder\Api\Resource;
 use \iHomefinder\Api\Exception\UnsavedResourceException;
 
 class ScheduleShowingRequest extends Resource {
 	
-	public function ScheduleShowingRequest(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -25,7 +22,7 @@ class ScheduleShowingRequest extends Resource {
 	}
 	
 	public function getSubscriberId() {
-		return $this->getter("subscriberId", Integer::class);
+		return $this->getter("subscriberId", "int");
 	}
 	
 	public function setSubscriberId($subscriberId): self {
@@ -34,7 +31,7 @@ class ScheduleShowingRequest extends Resource {
 	}
 	
 	public function getListingId() {
-		return $this->getter("listingId", String::class);
+		return $this->getter("listingId", "string");
 	}
 	
 	public function setListingId($listingId): self {
@@ -70,7 +67,7 @@ class ScheduleShowingRequest extends Resource {
 	}
 	
 	public function getMessage() {
-		return $this->getter("message", String::class);
+		return $this->getter("message", "string");
 	}
 	
 	public function setMessage($message): self {
@@ -104,7 +101,7 @@ class ScheduleShowingRequest extends Resource {
 		return $this;
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"subscriberId",

@@ -15,8 +15,12 @@ class OpenHomeReportSignupRequests extends Resources {
 		return $openHomeReportSignupRequests;
 	}
 	
-	public function OpenHomeReportSignupRequests(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return OpenHomeReportSignupRequest::class;
 	}
 	
 }

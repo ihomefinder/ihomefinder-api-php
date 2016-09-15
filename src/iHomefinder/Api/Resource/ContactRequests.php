@@ -15,8 +15,12 @@ class ContactRequests extends Resources {
 		return $contactRequests;
 	}
 	
-	public function ContactRequests(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return ContactRequest::class;
 	}
 	
 }

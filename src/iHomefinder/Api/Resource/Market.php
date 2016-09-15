@@ -3,17 +3,17 @@
 namespace iHomefinder\Api\Resource;
 
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Resource;
 
 class Market extends Resource {
 	
-	public function Market(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -22,7 +22,7 @@ class Market extends Resource {
 	}
 	
 	public function getClientId() {
-		return $this->getter("clientId", Integer::class);
+		return $this->getter("clientId", "int");
 	}
 	
 	public function setClientId($clientId): self {
@@ -31,7 +31,7 @@ class Market extends Resource {
 	}
 	
 	public function getName() {
-		return $this->getter("name", String::class);
+		return $this->getter("name", "string");
 	}
 	
 	public function setName($name): self {
@@ -40,7 +40,7 @@ class Market extends Resource {
 	}
 	
 	public function getDescription() {
-		return $this->getter("description", String::class);
+		return $this->getter("description", "string");
 	}
 	
 	public function setDescription($description): self {
@@ -58,7 +58,7 @@ class Market extends Resource {
 	}
 	
 	public function getIndexDisplayOrder() {
-		return $this->getter("indexDisplayOrder", Integer::class);
+		return $this->getter("indexDisplayOrder", "int");
 	}
 	
 	public function setIndexDisplayOrder($indexDisplayOrder): self {
@@ -78,7 +78,7 @@ class Market extends Resource {
 		return $this->getter("marketReport", MarketReport::class);
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"clientId",

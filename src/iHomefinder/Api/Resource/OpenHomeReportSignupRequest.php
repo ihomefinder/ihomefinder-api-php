@@ -2,21 +2,19 @@
 
 namespace iHomefinder\Api\Resource;
 
-
-
 use \iHomefinder\Api\Authentication;
-use \iHomefinder\Api\Fields;
+
 use \iHomefinder\Api\Resource;
 use \iHomefinder\Api\Exception\UnsavedResourceException;
 
 class OpenHomeReportSignupRequest extends Resource {
 	
-	public function OpenHomeReportSignupRequest(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
 	}
 
 	public function getId() {
-		return $this->getter("id", Integer::class);
+		return $this->getter("id", "int");
 	}
 	
 	public function setId($id): self {
@@ -25,7 +23,7 @@ class OpenHomeReportSignupRequest extends Resource {
 	}
 	
 	public function getSubscriberId() {
-		return $this->getter("subscriberId", Integer::class);
+		return $this->getter("subscriberId", "int");
 	}
 	
 	public function setSubscriberId($subscriberId): self {
@@ -34,7 +32,7 @@ class OpenHomeReportSignupRequest extends Resource {
 	}
 	
 	public function getOpenHomeReportId() {
-		return $this->getter("openHomeReportId", Integer::class);
+		return $this->getter("openHomeReportId", "int");
 	}
 	
 	public function setOpenHomeReportId($openHomeReportId): self {
@@ -77,7 +75,7 @@ class OpenHomeReportSignupRequest extends Resource {
 		return $this;
 	}
 	
-	protected function getFieldNames(): Fields {
+	protected function getFieldNames(): array {
 		return [
 			"id",
 			"subscriberId",

@@ -15,8 +15,12 @@ class ValuationRequests extends Resources {
 		return $valuationRequests;
 	}
 	
-	public function ValuationRequests(Authentication $auth) {
+	public function __construct(Authentication $auth) {
 		parent::__construct($auth);
+	}
+	
+	protected function getElementClass(): string {
+		return ValuationRequest::class;
 	}
 	
 }
