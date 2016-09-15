@@ -2,12 +2,18 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
 
 class Listing extends Resource {
 	
-	public function getId(): string {
-		return $this->getter("id");
+	public function Listing(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", String::class);
 	}
 	
 	public function setId($id): self {
@@ -16,7 +22,7 @@ class Listing extends Resource {
 	}
 	
 	public function getListingNumber() {
-		return $this->getter("listingNumber");
+		return $this->getter("listingNumber", String::class);
 	}
 	
 	public function setListingNumber($listingNumber): self {
@@ -25,7 +31,7 @@ class Listing extends Resource {
 	}
 	
 	public function getBoardId() {
-		return $this->getter("boardId");
+		return $this->getter("boardId", String::class);
 	}
 	
 	public function setBoardId($boardId): self {
@@ -34,7 +40,7 @@ class Listing extends Resource {
 	}
 	
 	public function getBedrooms() {
-		return $this->getter("bedrooms");
+		return $this->getter("bedrooms", String::class);
 	}
 	
 	public function setBedrooms($bedrooms): self {
@@ -43,7 +49,7 @@ class Listing extends Resource {
 	}
 	
 	public function getFullBathrooms() {
-		return $this->getter("fullBathrooms");
+		return $this->getter("fullBathrooms", String::class);
 	}
 	
 	public function setFullBathrooms($fullBathrooms): self {
@@ -52,7 +58,7 @@ class Listing extends Resource {
 	}
 	
 	public function getPartialBathrooms() {
-		return $this->getter("partialBathrooms");
+		return $this->getter("partialBathrooms", String::class);
 	}
 	
 	public function setPartialBathrooms($partialBathrooms): self {
@@ -63,15 +69,15 @@ class Listing extends Resource {
 	public function getBoard(): Board {
 		return $this->getter("board", Board::class);
 	}
-	
-	protected function getFieldNames(): array {
+	
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"listingNumber",
 			"boardId",
 			"bedrooms",
 			"fullBathrooms",
-			"partialBathrooms",
+			"partialBathrooms"
 		];
 	}
 	

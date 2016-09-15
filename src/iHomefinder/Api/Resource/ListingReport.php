@@ -2,12 +2,18 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
 
 class ListingReport extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function ListingReport(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -16,7 +22,7 @@ class ListingReport extends Resource {
 	}
 	
 	public function getMarketId() {
-		return $this->getter("marketId");
+		return $this->getter("marketId", Integer::class);
 	}
 	
 	public function setMarketId($marketId): self {
@@ -25,7 +31,7 @@ class ListingReport extends Resource {
 	}
 	
 	public function getWebPageIntroText() {
-		return $this->getter("webPageIntroText");
+		return $this->getter("webPageIntroText", String::class);
 	}
 	
 	public function setWebPageIntroText($webPageIntroText): self {
@@ -34,7 +40,7 @@ class ListingReport extends Resource {
 	}
 	
 	public function getEmailIntroText() {
-		return $this->getter("emailIntroText");
+		return $this->getter("emailIntroText", String::class);
 	}
 	
 	public function setEmailIntroText($emailIntroText): self {
@@ -43,7 +49,7 @@ class ListingReport extends Resource {
 	}
 	
 	public function getDisplayInNavigation() {
-		return $this->getter("displayInNavigation");
+		return $this->getter("displayInNavigation", Boolean::class);
 	}
 	
 	public function setDisplayInNavigation($displayInNavigation): self {
@@ -51,17 +57,21 @@ class ListingReport extends Resource {
 		return $this;
 	}
 	
-	public function getMarket(): Market {
-		$this->getter("market", Market::class);
+	public function  getMarket(): Market {
+		return $this->getter("market", Market::class);
 	}
 	
-	protected function getFieldNames(): array {
+	public function  getListingReportSubscriptions(): ListingReportSubscriptions {
+		return $this->getter("listingReportSubscriptions", ListingReportSubscriptions::class);
+	}
+	
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"marketId",
 			"webPageIntroText",
 			"emailIntroText",
-			"displayInNavigation",
+			"displayInNavigation"
 		];
 	}
 	

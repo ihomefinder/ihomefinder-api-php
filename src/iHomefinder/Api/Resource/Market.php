@@ -2,12 +2,18 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
 
 class Market extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function Market(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -16,7 +22,7 @@ class Market extends Resource {
 	}
 	
 	public function getClientId() {
-		return $this->getter("clientId");
+		return $this->getter("clientId", Integer::class);
 	}
 	
 	public function setClientId($clientId): self {
@@ -25,7 +31,7 @@ class Market extends Resource {
 	}
 	
 	public function getName() {
-		return $this->getter("name");
+		return $this->getter("name", String::class);
 	}
 	
 	public function setName($name): self {
@@ -34,7 +40,7 @@ class Market extends Resource {
 	}
 	
 	public function getDescription() {
-		return $this->getter("description");
+		return $this->getter("description", String::class);
 	}
 	
 	public function setDescription($description): self {
@@ -43,7 +49,7 @@ class Market extends Resource {
 	}
 	
 	public function getDisplayOnIndex() {
-		return $this->getter("displayOnIndex");
+		return $this->getter("displayOnIndex", Boolean::class);
 	}
 	
 	public function setDisplayOnIndex($displayOnIndex): self {
@@ -52,7 +58,7 @@ class Market extends Resource {
 	}
 	
 	public function getIndexDisplayOrder() {
-		return $this->getter("indexDisplayOrder");
+		return $this->getter("indexDisplayOrder", Integer::class);
 	}
 	
 	public function setIndexDisplayOrder($indexDisplayOrder): self {
@@ -60,30 +66,26 @@ class Market extends Resource {
 		return $this;
 	}
 	
-	public function getListingReport() {
+	public function getListingReport(): ListingReport {
 		return $this->getter("listingReport", ListingReport::class);
 	}
 	
-	public function getOpenHomeReport() {
+	public function getOpenHomeReport(): OpenHomeReport {
 		return $this->getter("openHomeReport", OpenHomeReport::class);
 	}
 	
-	public function getMarketReport() {
+	public function getMarketReport(): MarketReport {
 		return $this->getter("marketReport", MarketReport::class);
 	}
 	
-	public function getReportSubscriptions() {
-		return $this->getter("reportSubscriptions", ReportSubscriptions::class);
-	}
-	
-	protected function getFieldNames(): array {
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"clientId",
 			"name",
 			"description",
 			"displayOnIndex",
-			"indexDisplayOrder",
+			"indexDisplayOrder"
 		];
 	}
 	

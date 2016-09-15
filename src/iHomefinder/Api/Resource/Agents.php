@@ -2,12 +2,21 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resources;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Query;
+use \iHomefinder\Api\Resources;
+use \iHomefinder\Api\Url;
 
 class Agents extends Resources {
+
+	public static function get(Authentication $auth, Query $query): self {
+		$agents = new Agents($auth);
+		$agents->init(Url::AGENTS, $query);
+		return $agents;
+	}
 	
-	protected function getElementClass(): string {
-		return Agent::class;
+	public function Agents(Authentication $auth) {
+		parent::__construct($auth);
 	}
 	
 }

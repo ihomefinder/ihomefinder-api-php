@@ -2,14 +2,19 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
-use iHomefinder\Api\ResourceWrapper;
-use iHomefinder\Api\Exception\UnsavedResourceException;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
+use \iHomefinder\Api\Exception\UnsavedResourceException;
 
 class MoreInfoRequest extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function MoreInfoRequest(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -18,7 +23,7 @@ class MoreInfoRequest extends Resource {
 	}
 	
 	public function getSubscriberId() {
-		return $this->getter("subscriberId");
+		return $this->getter("subscriberId", Integer::class);
 	}
 	
 	public function setSubscriberId($subscriberId): self {
@@ -27,7 +32,7 @@ class MoreInfoRequest extends Resource {
 	}
 	
 	public function getListingId() {
-		return $this->getter("listingId");
+		return $this->getter("listingId", String::class);
 	}
 	
 	public function setListingId($listingId): self {
@@ -35,17 +40,17 @@ class MoreInfoRequest extends Resource {
 		return $this;
 	}
 	
-	public function getCreatedOn() {
-		return $this->getter("createdOn");
+	public function getCreatedOn(): DateTime {
+		return $this->getter("createdOn", DateTime::class);
 	}
 	
-	public function setCreatedOn($createdOn): self {
+	public function setCreatedOn(DateTime $createdOn): self {
 		$this->setter("createdOn", $createdOn);
 		return $this;
 	}
 	
 	public function getMessage() {
-		return $this->getter("message");
+		return $this->getter("message", String::class);
 	}
 	
 	public function setMessage($message): self {
@@ -53,12 +58,12 @@ class MoreInfoRequest extends Resource {
 		return $this;
 	}
 	
-	public function getSubscriber() {
+	public function getSubscriber(): Subscriber {
 		return $this->getter("subscriber", Subscriber::class);
 	}
 	
 	public function setSubscriber(Subscriber $subscriber): self {
-		if(ResourceWrapper::getInstance($subscriber)->isTransient()) {
+		if($subscriber->isTransient()) {
 			throw new UnsavedResourceException($subscriber);
 		}
 		$this->setSubscriberId($subscriber->getId());
@@ -66,26 +71,26 @@ class MoreInfoRequest extends Resource {
 		return $this;
 	}
 	
-	public function getListing() {
+	public function getListing(): Listing {
 		return $this->getter("listing", Listing::class);
 	}
 	
 	public function setListing(Listing $listing): self {
-		if(ResourceWrapper::getInstance($listing)->isTransient()) {
-			throw new UnsavedResourceException($listing);
+		if($listing->isTransient()) {
+			throw new UnsavedResourceException(listing);
 		}
 		$this->setListingId($listing->getId());
 		$this->setter("listing", $listing);
 		return $this;
 	}
-	
-	protected function getFieldNames(): array {
+	
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"subscriberId",
 			"listingId",
 			"createdOn",
-			"message",
+			"message"
 		];
 	}
 	

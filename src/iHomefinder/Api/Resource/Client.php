@@ -2,12 +2,18 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
 
 class Client extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function Client(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -16,7 +22,7 @@ class Client extends Resource {
 	}
 	
 	public function getFirstName() {
-		return $this->getter("firstName");
+		return $this->getter("firstName", String::class);
 	}
 	
 	public function setFirstName($firstName): self {
@@ -25,7 +31,7 @@ class Client extends Resource {
 	}
 	
 	public function getLastName() {
-		return $this->getter("lastName");
+		return $this->getter("lastName", String::class);
 	}
 	
 	public function setLastName($lastName): self {
@@ -33,63 +39,63 @@ class Client extends Resource {
 		return $this;
 	}
 	
-	public function getBoards(): Boards {
+	public function  getBoards(): Boards {
 		return $this->getter("boards", Boards::class);
 	}
 	
-	public function getListings(): Listings {
+	public function  getListings(): Listings {
 		return $this->getter("listings", Listings::class);
 	}
 	
-	public function getSubscribers(): Subscribers {
+	public function  getSubscribers(): Subscribers {
 		return $this->getter("subscribers", Subscribers::class);
 	}
 	
-	public function getMarkets(): Markets {
+	public function  getMarkets(): Markets {
 		return $this->getter("markets", Markets::class);
 	}
 	
-	public function getAgents(): Agents {
+	public function  getAgents(): Agents {
 		return $this->getter("agents", Agents::class);
 	}
 	
-	public function getOffices(): Offices {
+	public function  getOffices(): Offices {
 		return $this->getter("offices", Offices::class);
 	}
 	
-	public function getMoreInfoRequests(): MoreInfoRequests {
+	public function  getMoreInfoRequests(): MoreInfoRequests {
 		return $this->getter("moreInfoRequests", MoreInfoRequests::class);
 	}
 	
-	public function getScheduleShowingRequests(): ScheduleShowingRequests {
+	public function  getScheduleShowingRequests(): ScheduleShowingRequests {
 		return $this->getter("scheduleShowingRequests", ScheduleShowingRequests::class);
 	}
 	
-	public function getValuationRequests(): ValuationRequests {
+	public function  getValuationRequests(): ValuationRequests {
 		return $this->getter("valuationRequests", ValuationRequests::class);
 	}
 	
-	public function getContactRequests(): ContactRequests {
+	public function  getContactRequests(): ContactRequests {
 		return $this->getter("contactRequests", ContactRequests::class);
 	}
 	
-	public function getListingReportSignupRequests(): ListingReportSignupRequests {
+	public function  getListingReportSignupRequests(): ListingReportSignupRequests {
 		return $this->getter("listingReportSignupRequests", ListingReportSignupRequests::class);
 	}
 	
-	public function getOpenHomeReportSignupRequests(): OpenHomeReportSignupRequests {
+	public function  getOpenHomeReportSignupRequests(): OpenHomeReportSignupRequests {
 		return $this->getter("openHomeReportSignupRequests", OpenHomeReportSignupRequests::class);
 	}
 	
-	public function getMarketReportSignupRequests(): MarketReportSignupRequests {
+	public function  getMarketReportSignupRequests(): MarketReportSignupRequests {
 		return $this->getter("marketReportSignupRequests", MarketReportSignupRequests::class);
 	}
 	
-	protected function getFieldNames(): array {
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"firstName",
-			"lastName",
+			"lastName"
 		];
 	}
 	

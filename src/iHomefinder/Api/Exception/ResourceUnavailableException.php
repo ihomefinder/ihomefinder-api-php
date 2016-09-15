@@ -1,7 +1,11 @@
 <?php
 
-namespace iHomefinder\Api\Exception;
+namespace iHomefinder\Api\exception;
 
 class ResourceUnavailableException extends ApiException {
+
+	public function ResourceUnavailableException($message) {
+		super(message);
+	}
 	
 }

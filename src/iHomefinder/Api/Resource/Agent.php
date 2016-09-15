@@ -2,14 +2,19 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
-use iHomefinder\Api\ResourceWrapper;
-use iHomefinder\Api\Exception\UnsavedResourceException;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
+use \iHomefinder\Api\Exception\UnsavedResourceException;
 
 class Agent extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function Agent(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -18,7 +23,7 @@ class Agent extends Resource {
 	}
 	
 	public function getOfficeId() {
-		return $this->getter("officeId");
+		return $this->getter("officeId", Integer::class);
 	}
 	
 	public function setOfficeId($officeId): self {
@@ -27,7 +32,7 @@ class Agent extends Resource {
 	}
 	
 	public function getFirstName() {
-		return $this->getter("firstName"); 
+		return $this->getter("firstName", String::class); 
 	}
 	
 	public function setFirstName($firstName): self {
@@ -36,7 +41,7 @@ class Agent extends Resource {
 	}
 	
 	public function getLastName() {
-		return $this->getter("lastName");
+		return $this->getter("lastName", String::class);
 	}
 	
 	public function setLastName($lastName): self {
@@ -44,62 +49,8 @@ class Agent extends Resource {
 		return $this;
 	}
 	
-	public function getDesignation() {
-		return $this->getter("designation");
-	}
-	
-	public function setDesignation($designation): self {
-		$this->setter("designation, $designation");
-		return $this;
-	}
-	
-	public function getMobilePhoneNumber() {
-		return $this->getter("mobilePhoneNumber");
-	}
-	
-	public function setMobilePhoneNumber($mobilePhoneNumber): self {
-		$this->setter("mobilePhoneNumber, $mobilePhoneNumber");
-		return $this;
-	}
-	
-	public function getHomePhoneNumber() {
-		return $this->getter("homePhoneNumber");
-	}
-	
-	public function setHomePhoneNumber($homePhoneNumber): self {
-		$this->setter("homePhoneNumber, $homePhoneNumber");
-		return $this;
-	}
-	
-	public function getHomeFaxNumber() {
-		return $this->getter("homeFaxNumber");
-	}
-	
-	public function setHomeFaxNumber($homeFaxNumber): self {
-		$this->setter("homeFaxNumber, $homeFaxNumber");
-		return $this;
-	}
-	
-	public function getOfficePhoneNumber() {
-		return $this->getter("officePhoneNumber");
-	}
-	
-	public function setOfficePhoneNumber($officePhoneNumber): self {
-		$this->setter("officePhoneNumber, $officePhoneNumber");
-		return $this;
-	}
-	
-	public function getOfficeFaxNumber() {
-		return $this->getter("officeFaxNumber");
-	}
-	
-	public function setOfficeFaxNumber($officeFaxNumber): self {
-		$this->setter("officeFaxNumber, $officeFaxNumber");
-		return $this;
-	}
-	
 	public function getEmailAddress() {
-		return $this->getter("emailAddress");
+		return $this->getter("emailAddress", String::class);
 	}
 	
 	public function setEmailAddress($emailAddress): self {
@@ -108,7 +59,7 @@ class Agent extends Resource {
 	}
 	
 	public function getAddress() {
-		return $this->getter("address");
+		return $this->getter("address", String::class);
 	}
 	
 	public function setAddress($address): self {
@@ -117,7 +68,7 @@ class Agent extends Resource {
 	}
 	
 	public function getCity() {
-		return $this->getter("city");
+		return $this->getter("city", String::class);
 	}
 	
 	public function setCity($city): self {
@@ -126,7 +77,7 @@ class Agent extends Resource {
 	}
 	
 	public function getState() {
-		return $this->getter("state");
+		return $this->getter("state", String::class);
 	}
 	
 	public function setState($state): self {
@@ -135,7 +86,7 @@ class Agent extends Resource {
 	}
 	
 	public function getPostalCode() {
-		return $this->getter("postalCode");
+		return $this->getter("postalCode", String::class);
 	}
 	
 	public function setPostalCode($postalCode): self {
@@ -143,12 +94,12 @@ class Agent extends Resource {
 		return $this;
 	}
 	
-	public function getOffice() {
+	public function getOffice(): Office {
 		return $this->getter("office", Office::class);
 	}
 	
 	public function setOffice(Office $office): self {
-		if(ResourceWrapper::getInstance($office)->isTransient()) {
+		if($office->isTransient()) {
 			throw new UnsavedResourceException($office);
 		}
 		$this->setOfficeId($office->getId());
@@ -156,7 +107,7 @@ class Agent extends Resource {
 		return $this;
 	}
 	
-	protected function getFieldNames(): array {
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"officeId",
@@ -166,7 +117,7 @@ class Agent extends Resource {
 			"address",
 			"city",
 			"state",
-			"postalCode",
+			"postalCode"
 		];
 	}
 	

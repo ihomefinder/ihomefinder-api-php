@@ -2,14 +2,21 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
-use iHomefinder\Api\ResourceWrapper;
-use iHomefinder\Api\Exception\UnsavedResourceException;
+
+
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
+use \iHomefinder\Api\Exception\UnsavedResourceException;
 
 class ListingReportSignupRequest extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function ListingReportSignupRequest(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -18,7 +25,7 @@ class ListingReportSignupRequest extends Resource {
 	}
 	
 	public function getSubscriberId() {
-		return $this->getter("subscriberId");
+		return $this->getter("subscriberId", Integer::class);
 	}
 	
 	public function setSubscriberId($subscriberId): self {
@@ -27,7 +34,7 @@ class ListingReportSignupRequest extends Resource {
 	}
 	
 	public function getListingReportId() {
-		return $this->getter("listingReportId");
+		return $this->getter("listingReportId", Integer::class);
 	}
 	
 	public function setListingReportId($listingReportId): self {
@@ -35,21 +42,21 @@ class ListingReportSignupRequest extends Resource {
 		return $this;
 	}
 	
-	public function getCreatedOn() {
-		return $this->getter("createdOn");
+	public function getCreatedOn(): DateTime {
+		return $this->getter("createdOn", DateTime::class);
 	}
 	
-	public function setCreatedOn($createdOn): self {
+	public function setCreatedOn(DateTime $createdOn): self {
 		$this->setter("createdOn", $createdOn);
 		return $this;
 	}
 	
-	public function getSubscriber() {
+	public function getSubscriber(): Subscriber {
 		return $this->getter("subscriber", Subscriber::class);
 	}
 	
 	public function setSubscriber(Subscriber $subscriber): self {
-		if(ResourceWrapper::getInstance($subscriber)->isTransient()) {
+		if($subscriber->isTransient()) {
 			throw new UnsavedResourceException($subscriber);
 		}
 		$this->setSubscriberId($subscriber->getId());
@@ -57,26 +64,25 @@ class ListingReportSignupRequest extends Resource {
 		return $this;
 	}
 	
-	public function getListingReport() {
+	public function getListingReport(): ListingReport {
 		return $this->getter("listingReport", ListingReport::class);
 	}
 	
 	public function setListingReport(ListingReport $listingReport): self {
-		if(ResourceWrapper::getInstance($listingReport)->isTransient()) {
+		if($listingReport->isTransient()) {
 			throw new UnsavedResourceException($listingReport);
 		}
-		$this->setListingId($listingReport->getId());
+		$this->setListingReportId($listingReport->getId());
 		$this->setter("listingReport", $listingReport);
 		return $this;
 	}
-	
-	protected function getFieldNames(): array {
+	
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"subscriberId",
 			"listingReportId",
-			"createdOn",
-			"message",
+			"createdOn"
 		];
 	}
 	

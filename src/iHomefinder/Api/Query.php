@@ -2,57 +2,55 @@
 
 namespace iHomefinder\Api;
 
-use iHomefinder\Api\Resource;
-use iHomefinder\Api\ResourceWrapper;
-use iHomefinder\Api\Request;
-
 class Query {
 	
 	protected $fields = [];
 	protected $where = [];
-	protected $offset;
 	protected $limit;
+	protected $offset;
 	
-	public function select(string ...$fields) {
-		$this->fields = $fields;
+	public function select(...$fields): Query {
+		$this->fields = array_merge($this->fields, $fields);
 		return $this;
 	}
 	
-	public function equal(string $fieldName, $fieldValue) {
+	public function where(string $fieldName, $fieldValue): Query {
 		$this->where[$fieldName] = $fieldValue;
 		return $this;
 	}
 	
-	public function example(Resource $resource) {
-		$wrapper = ResourceWrapper::getInstance($resource);
-		$fields = $wrapper->getAllFieldsValues();
-		foreach($fields as $fieldName => $fieldValue) {
-			$this->equal($fieldName, $fieldValue);
-		}
+	public function whereAll(array $fields): Query {
+		$this->where = array_merge($this->where, $fields);
+		return $this;
 	}
 	
-	public function limit(int $limit) {
+	public function example(Resource $resource): Query {
+		$fields = $resource->getHydratedFieldsValues();
+		$this->whereAll($fields);
+		return $this;
+	}
+	
+	public function limit($limit): Query {
 		$this->limit = $limit;
 		return $this;
 	}
 	
-	public function offset(int $offset) {
+	public function offset($offset): Query {
 		$this->offset = $offset;
 		return $this;
 	}
 	
-	public function loadRequest(Request $request) {
-		$request->setParameters($this->where);		
-		if($this->offset !== null) {
+	public function loadRequest(HttpRequest $request) {
+		$request->setParameters($this->where);
+		if($this->offset != null) {
 			$request->setParameter("offset", $this->offset);
 		}
-		if($this->limit !== null) {
+		if($this->limit != null) {
 			$request->setParameter("limit", $this->limit);
 		}
-		if(!empty($this->fields)) {
-			$result["fields"] = join(",", $this->fields);
+		if(!$this->fields->isEmpty()) {
+			$request->setParameter("fields", implode(",", $this->fields));
 		}
-		return $result;
 	}
 	
 }

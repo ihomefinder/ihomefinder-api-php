@@ -2,12 +2,18 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
 
 class Office extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function Office(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -16,7 +22,7 @@ class Office extends Resource {
 	}
 	
 	public function getName() {
-		return $this->getter("name"); 
+		return $this->getter("name", String::class); 
 	}
 	
 	public function setName($name): self {
@@ -24,26 +30,8 @@ class Office extends Resource {
 		return $this;
 	}
 	
-	public function getPhoneNumber() {
-		return $this->getter("phoneNumber");
-	}
-	
-	public function setPhoneNumber($phoneNumber): self {
-		$this->setter("phoneNumber, $phoneNumber");
-		return $this;
-	}
-	
-	public function getFaxNumber() {
-		return $this->getter("faxNumber");
-	}
-	
-	public function setFaxNumber($faxNumber): self {
-		$this->setter("faxNumber, $faxNumber");
-		return $this;
-	}
-	
 	public function getEmailAddress() {
-		return $this->getter("emailAddress");
+		return $this->getter("emailAddress", String::class);
 	}
 	
 	public function setEmailAddress($emailAddress): self {
@@ -52,7 +40,7 @@ class Office extends Resource {
 	}
 	
 	public function getAddress() {
-		return $this->getter("address");
+		return $this->getter("address", String::class);
 	}
 	
 	public function setAddress($address): self {
@@ -61,7 +49,7 @@ class Office extends Resource {
 	}
 	
 	public function getCity() {
-		return $this->getter("city");
+		return $this->getter("city", String::class);
 	}
 	
 	public function setCity($city): self {
@@ -70,7 +58,7 @@ class Office extends Resource {
 	}
 	
 	public function getState() {
-		return $this->getter("state");
+		return $this->getter("state", String::class);
 	}
 	
 	public function setState($state): self {
@@ -79,7 +67,7 @@ class Office extends Resource {
 	}
 	
 	public function getPostalCode() {
-		return $this->getter("postalCode");
+		return $this->getter("postalCode", String::class);
 	}
 	
 	public function setPostalCode($postalCode): self {
@@ -87,11 +75,10 @@ class Office extends Resource {
 		return $this;
 	}
 	
-	public function getAgents(): Agents {
+	public function  getAgents(): Agents {
 		return $this->getter("agents", Agents::class);
 	}
-	
-	protected function getFieldNames(): array {
+		protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"name",
@@ -99,7 +86,7 @@ class Office extends Resource {
 			"address",
 			"city",
 			"state",
-			"postalCode",
+			"postalCode"
 		];
 	}
 	

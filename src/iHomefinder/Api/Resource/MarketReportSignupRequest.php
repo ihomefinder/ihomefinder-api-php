@@ -2,14 +2,21 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
-use iHomefinder\Api\ResourceWrapper;
-use iHomefinder\Api\Exception\UnsavedResourceException;
+
+
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Resource;
+use \iHomefinder\Api\Exception\UnsavedResourceException;
 
 class MarketReportSignupRequest extends Resource {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public function MarketReportSignupRequest(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -18,7 +25,7 @@ class MarketReportSignupRequest extends Resource {
 	}
 	
 	public function getSubscriberId() {
-		return $this->getter("subscriberId");
+		return $this->getter("subscriberId", Integer::class);
 	}
 	
 	public function setSubscriberId($subscriberId): self {
@@ -27,7 +34,7 @@ class MarketReportSignupRequest extends Resource {
 	}
 	
 	public function getMarketReportId() {
-		return $this->getter("marketReportId");
+		return $this->getter("marketReportId", Integer::class);
 	}
 	
 	public function setMarketReportId($marketReportId): self {
@@ -35,21 +42,21 @@ class MarketReportSignupRequest extends Resource {
 		return $this;
 	}
 	
-	public function getCreatedOn() {
-		return $this->getter("createdOn");
+	public function getCreatedOn(): DateTime {
+		return $this->getter("createdOn", DateTime::class);
 	}
 	
-	public function setCreatedOn($createdOn): self {
+	public function setCreatedOn(DateTime $createdOn): self {
 		$this->setter("createdOn", $createdOn);
 		return $this;
 	}
 	
-	public function getSubscriber() {
+	public function getSubscriber(): Subscriber {
 		return $this->getter("subscriber", Subscriber::class);
 	}
 	
 	public function setSubscriber(Subscriber $subscriber): self {
-		if(ResourceWrapper::getInstance($subscriber)->isTransient()) {
+		if($subscriber->isTransient()) {
 			throw new UnsavedResourceException($subscriber);
 		}
 		$this->setSubscriberId($subscriber->getId());
@@ -57,26 +64,25 @@ class MarketReportSignupRequest extends Resource {
 		return $this;
 	}
 	
-	public function getMarketReport() {
+	public function getMarketReport(): MarketReport {
 		return $this->getter("marketReport", MarketReport::class);
 	}
 	
 	public function setMarketReport(MarketReport $marketReport): self {
-		if(ResourceWrapper::getInstance($marketReport)->isTransient()) {
+		if($marketReport->isTransient()) {
 			throw new UnsavedResourceException($marketReport);
 		}
-		$this->setListingId($marketReport->getId());
+		$this->setMarketReportId($marketReport->getId());
 		$this->setter("marketReport", $marketReport);
 		return $this;
 	}
-	
-	protected function getFieldNames(): array {
+	
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"subscriberId",
 			"marketReportId",
-			"createdOn",
-			"message",
+			"createdOn"
 		];
 	}
 	

@@ -2,14 +2,29 @@
 
 namespace iHomefinder\Api\Resource;
 
-use iHomefinder\Api\Resource;
-use iHomefinder\Api\ResourceWrapper;
-use iHomefinder\Api\Exception\UnsavedResourceException;
+use \iHomefinder\Api\Authentication;
+use \iHomefinder\Api\Fields;
+use \iHomefinder\Api\Query;
+use \iHomefinder\Api\Resource;
+use \iHomefinder\Api\Savable;
+use \iHomefinder\Api\Url;
+use \iHomefinder\Api\Exception\UnsavedResourceException;
 
-class Subscriber extends Resource {
+class Subscriber extends Resource implements Savable {
 	
-	public function getId(): int {
-		return $this->getter("id");
+	public static function getById(Authentication $auth, Integer $id): Subscriber {
+		$query = (new Query())
+			->where("id", $id)
+		;
+		return Subscribers::get($auth, $query)->iterator()->next();
+	}
+	
+	public function Subscriber(Authentication $auth) {
+		parent::__construct($auth);
+	}
+
+	public function getId() {
+		return $this->getter("id", Integer::class);
 	}
 	
 	public function setId($id): self {
@@ -18,7 +33,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getClientId() {
-		return $this->getter("clientId");
+		return $this->getter("clientId", Integer::class);
 	}
 	
 	public function setClientId($clientId): self {
@@ -27,7 +42,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getAgentId() {
-		return $this->getter("agentId");
+		return $this->getter("agentId", Integer::class);
 	}
 	
 	public function setAgentId($agentId): self {
@@ -36,7 +51,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getFirstName() {
-		return $this->getter("firstName");
+		return $this->getter("firstName", String::class);
 	}
 	
 	public function setFirstName($firstName): self {
@@ -45,7 +60,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getLastName() {
-		return $this->getter("lastName");
+		return $this->getter("lastName", String::class);
 	}
 	
 	public function setLastName($lastName): self {
@@ -54,7 +69,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getEmailAddress() {
-		return $this->getter("emailAddress");
+		return $this->getter("emailAddress", String::class);
 	}
 	
 	public function setEmailAddress($emailAddress): self {
@@ -62,8 +77,8 @@ class Subscriber extends Resource {
 		return $this;
 	}
 	
-	private function getPassword() {
-		return $this->getter("password");
+	public function getPassword() {
+		return $this->getter("password", String::class);
 	}
 	
 	public function setPassword($password): self {
@@ -72,7 +87,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getPhone() {
-		return $this->getter("phone");
+		return $this->getter("phone", String::class);
 	}
 	
 	public function setPhone($phone): self {
@@ -81,7 +96,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getAddress() {
-		return $this->getter("address");
+		return $this->getter("address", String::class);
 	}
 	
 	public function setAddress($address): self {
@@ -90,7 +105,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getCity() {
-		return $this->getter("city");
+		return $this->getter("city", String::class);
 	}
 	
 	public function setCity($city): self {
@@ -99,7 +114,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getState() {
-		return $this->getter("state");
+		return $this->getter("state", String::class);
 	}
 	
 	public function setState($state): self {
@@ -108,7 +123,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getPostalCode() {
-		return $this->getter("postalCode");
+		return $this->getter("postalCode", String::class);
 	}
 	
 	public function setPostalCode($postalCode): self {
@@ -117,7 +132,7 @@ class Subscriber extends Resource {
 	}
 	
 	public function getClient(): Client {
-		$this->getter("client", Client::class);
+		return $this->getter("client", Client::class);
 	}
 	
 	public function setClient(Client $client): self {
@@ -125,20 +140,25 @@ class Subscriber extends Resource {
 		return $this;
 	}
 	
-	public function getAgent() {
-		$this->getter("agent", Agent::class);
+	public function getAgent(): Agent {
+		return $this->getter("agent", Agent::class);
 	}
 	
 	public function setAgent(Agent $agent): self {
-		if(ResourceWrapper::getInstance($agent)->isTransient()) {
+		if($agent->isTransient()) {
 			throw new UnsavedResourceException($agent);
 		}
 		$this->setAgentId($agent->getId());
 		$this->setter("agent", $agent);
 		return $this;
 	}
-	
-	protected function getFieldNames(): array {
+	
+	public function save(): self {
+		saveHelper(Url::SUBSCRIBERS);
+		return $this;
+	}
+	
+	protected function getFieldNames(): Fields {
 		return [
 			"id",
 			"clientId",
@@ -151,7 +171,7 @@ class Subscriber extends Resource {
 			"address",
 			"city",
 			"state",
-			"postalCode",
+			"postalCode"
 		];
 	}
 	

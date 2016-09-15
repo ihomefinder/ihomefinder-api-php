@@ -1,13 +1,13 @@
 <?php
 
-namespace iHomefinder\Api\Exception;
+namespace iHomefinder\Api\exception;
 
-use iHomefinder\Api\Resource;
+use \iHomefinder\Api\Resource;
 
 class UnsavedResourceException extends ApiException {
-	
-	public function __construct(Resource $resource) {
-		parent::__construct("Resource has not been saved");
+
+	public function UnsavedResourceException(Resource $resource) {
+		super("Resource has not been saved");
 	}
 	
 }
