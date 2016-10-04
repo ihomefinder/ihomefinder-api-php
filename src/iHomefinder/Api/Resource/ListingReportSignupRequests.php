@@ -9,7 +9,7 @@ use \iHomefinder\Api\Url;
 
 class ListingReportSignupRequests extends Resources {
 
-	public static function  get(Authentication $auth, Query $query): self {
+	public static function get(Authentication $auth, Query $query): self {
 		$listingReportSignupRequests = new ListingReportSignupRequests($auth);
 		$listingReportSignupRequests->init(Url::LISTING_REPORT_SIGNUP_REQUESTS, $query);
 		return $listingReportSignupRequests;

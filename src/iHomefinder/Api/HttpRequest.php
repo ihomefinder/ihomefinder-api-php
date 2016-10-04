@@ -4,6 +4,7 @@ namespace iHomefinder\Api;
 
 use \Unirest\Request as UnirestRequest;
 use \Unirest\Response as UnirestResponse;
+use iHomefinder\Api\Exception\HttpException;
 
 class HttpRequest {
 

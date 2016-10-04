@@ -39,55 +39,51 @@ class Client extends Resource {
 		return $this;
 	}
 	
-	public function  getBoards(): Boards {
-		return $this->getter("boards", Boards::class);
-	}
-	
-	public function  getListings(): Listings {
+	public function getListings(): Listings {
 		return $this->getter("listings", Listings::class);
 	}
 	
-	public function  getSubscribers(): Subscribers {
+	public function getSubscribers(): Subscribers {
 		return $this->getter("subscribers", Subscribers::class);
 	}
 	
-	public function  getMarkets(): Markets {
+	public function getMarkets(): Markets {
 		return $this->getter("markets", Markets::class);
 	}
 	
-	public function  getAgents(): Agents {
+	public function getAgents(): Agents {
 		return $this->getter("agents", Agents::class);
 	}
 	
-	public function  getOffices(): Offices {
+	public function getOffices(): Offices {
 		return $this->getter("offices", Offices::class);
 	}
 	
-	public function  getMoreInfoRequests(): MoreInfoRequests {
+	public function getMoreInfoRequests(): MoreInfoRequests {
 		return $this->getter("moreInfoRequests", MoreInfoRequests::class);
 	}
 	
-	public function  getScheduleShowingRequests(): ScheduleShowingRequests {
+	public function getScheduleShowingRequests(): ScheduleShowingRequests {
 		return $this->getter("scheduleShowingRequests", ScheduleShowingRequests::class);
 	}
 	
-	public function  getValuationRequests(): ValuationRequests {
+	public function getValuationRequests(): ValuationRequests {
 		return $this->getter("valuationRequests", ValuationRequests::class);
 	}
 	
-	public function  getContactRequests(): ContactRequests {
+	public function getContactRequests(): ContactRequests {
 		return $this->getter("contactRequests", ContactRequests::class);
 	}
 	
-	public function  getListingReportSignupRequests(): ListingReportSignupRequests {
+	public function getListingReportSignupRequests(): ListingReportSignupRequests {
 		return $this->getter("listingReportSignupRequests", ListingReportSignupRequests::class);
 	}
 	
-	public function  getOpenHomeReportSignupRequests(): OpenHomeReportSignupRequests {
+	public function getOpenHomeReportSignupRequests(): OpenHomeReportSignupRequests {
 		return $this->getter("openHomeReportSignupRequests", OpenHomeReportSignupRequests::class);
 	}
 	
-	public function  getMarketReportSignupRequests(): MarketReportSignupRequests {
+	public function getMarketReportSignupRequests(): MarketReportSignupRequests {
 		return $this->getter("marketReportSignupRequests", MarketReportSignupRequests::class);
 	}
 	

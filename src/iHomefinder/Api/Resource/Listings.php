@@ -9,7 +9,7 @@ use \iHomefinder\Api\Url;
 
 class Listings extends Resources {
 
-	public static function  get(Authentication $auth, Query $query): self {
+	public static function get(Authentication $auth, Query $query): self {
 		$listings = new Listings($auth);
 		$listings->init(Url::LISTINGS, $query);
 		return $listings;

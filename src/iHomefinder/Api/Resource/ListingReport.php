@@ -57,11 +57,11 @@ class ListingReport extends Resource {
 		return $this;
 	}
 	
-	public function  getMarket(): Market {
+	public function getMarket(): Market {
 		return $this->getter("market", Market::class);
 	}
 	
-	public function  getListingReportSubscriptions(): ListingReportSubscriptions {
+	public function getListingReportSubscriptions(): ListingReportSubscriptions {
 		return $this->getter("listingReportSubscriptions", ListingReportSubscriptions::class);
 	}
 	

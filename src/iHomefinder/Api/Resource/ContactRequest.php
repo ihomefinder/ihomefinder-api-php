@@ -31,7 +31,7 @@ class ContactRequest extends Resource {
 		return $this;
 	}
 	
-	public function  getCreatedOn(): DateTime {
+	public function getCreatedOn(): DateTime {
 		return $this->getter("createdOn", DateTime::class);
 	}
 	
@@ -49,7 +49,7 @@ class ContactRequest extends Resource {
 		return $this;
 	}
 	
-	public function  getSubscriber(): Subscriber {
+	public function getSubscriber(): Subscriber {
 		return $this->getter("subscriber", Subscriber::class);
 	}
 	

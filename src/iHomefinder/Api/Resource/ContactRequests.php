@@ -9,7 +9,7 @@ use \iHomefinder\Api\Url;
 
 class ContactRequests extends Resources {
 
-	public static function  get(Authentication $auth, Query $query): self {
+	public static function get(Authentication $auth, Query $query): self {
 		$contactRequests = new ContactRequests($auth);
 		$contactRequests->init(Url::CONTACT_REQUESTS, $query);
 		return $contactRequests;

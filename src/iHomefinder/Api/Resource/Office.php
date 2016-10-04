@@ -75,7 +75,7 @@ class Office extends Resource {
 		return $this;
 	}
 	
-	public function  getAgents(): Agents {
+	public function getAgents(): Agents {
 		return $this->getter("agents", Agents::class);
 	}
 		protected function getFieldNames(): array {

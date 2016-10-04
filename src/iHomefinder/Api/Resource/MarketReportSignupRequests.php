@@ -9,7 +9,7 @@ use \iHomefinder\Api\Url;
 
 class MarketReportSignupRequests extends Resources {
 
-	public static function  get(Authentication $auth, Query $query): self {
+	public static function get(Authentication $auth, Query $query): self {
 		$marketReportSignupRequests = new MarketReportSignupRequests($auth);
 		$marketReportSignupRequests->init(Url::MARKET_REPORT_SIGNUP_REQUESTS, $query);
 		return $marketReportSignupRequests;
