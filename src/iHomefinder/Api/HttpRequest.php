@@ -21,6 +21,10 @@ class HttpRequest {
 		if(Constants::DEBUG) {
 			$this->parameters["debug"] = true;
 		}
+		if(Constants::TEST) {
+			UnirestRequest::verifyPeer(false);
+			UnirestRequest::verifyHost(false);
+		}
 	}
 	
 	public function setUrl(string $url): self {
@@ -88,10 +92,10 @@ class HttpRequest {
 		} catch(UnirestException $e) {
 			throw new HttpException($e);
 		}
+		Log::debug($httpResponse->body);
 		$status = $httpResponse->code;
 		if($status < 200 || $status > 299) {
-			Log::debug($httpResponse->body);
-			throw new HttpException("Status " + status);
+			throw new HttpException("Status " + $status);
 		}
 		return new HttpResponse($httpResponse);
 	}

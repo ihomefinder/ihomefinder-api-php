@@ -19,4 +19,8 @@ class Markets extends Resources {
 		parent::__construct($auth);
 	}
 	
+	protected function getElementClass(): string {
+		return Market::class;
+	}
+	
 }

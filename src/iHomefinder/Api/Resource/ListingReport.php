@@ -49,7 +49,7 @@ class ListingReport extends Resource {
 	}
 	
 	public function getDisplayInNavigation() {
-		return $this->getter("displayInNavigation", Boolean::class);
+		return $this->getter("displayInNavigation", "bool");
 	}
 	
 	public function setDisplayInNavigation($displayInNavigation): self {

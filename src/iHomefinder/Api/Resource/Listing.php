@@ -39,6 +39,15 @@ class Listing extends Resource {
 		return $this;
 	}
 	
+	public function getAddress() {
+		return $this->getter("address", ListingAddress::class);
+	}
+	
+	public function setAddress(ListingAddress $address): self {
+		$this->setter("address", $address);
+		return $this;
+	}
+	
 	public function getBedrooms() {
 		return $this->getter("bedrooms", "string");
 	}
@@ -69,7 +78,10 @@ class Listing extends Resource {
 	public function getBoard(): Board {
 		return $this->getter("board", Board::class);
 	}
-	
+	
+	public function getPhotos(): ListingPhotos {
+		return $this->getter("photos", ListingPhotos::class);
+	}
 	protected function getFieldNames(): array {
 		return [
 			"id",

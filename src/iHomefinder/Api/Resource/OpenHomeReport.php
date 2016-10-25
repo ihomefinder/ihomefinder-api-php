@@ -49,7 +49,7 @@ class OpenHomeReport extends Resource {
 	}
 	
 	public function getDisplayInNavigation() {
-		return $this->getter("displayInNavigation", Boolean::class);
+		return $this->getter("displayInNavigation", "bool");
 	}
 	
 	public function setDisplayInNavigation($displayInNavigation): self {
@@ -58,7 +58,7 @@ class OpenHomeReport extends Resource {
 	}
 	
 	public function getLimitEmailToFeaturedListings() {
-		return $this->getter("limitEmailToFeaturedListings", Boolean::class);
+		return $this->getter("limitEmailToFeaturedListings", "bool");
 	}
 	
 	public function setLimitEmailToFeaturedListings($limitEmailToFeaturedListings): self {

@@ -49,7 +49,7 @@ class Market extends Resource {
 	}
 	
 	public function getDisplayOnIndex() {
-		return $this->getter("displayOnIndex", Boolean::class);
+		return $this->getter("displayOnIndex", "bool");
 	}
 	
 	public function setDisplayOnIndex($displayOnIndex): self {
